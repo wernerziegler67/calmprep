@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CalmPrep</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <style>
+        :root {
+            --primary-blue: #0369a1;
+            --bg-gradient: linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 2. Full Screen Layout */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            height: 100vh;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .active { display: flex; }
+
+        h1, h2 { color: var(--primary-blue); margin-bottom: 30px; }
+
+        /* 3. Improved Button Spacing & Style [cite: 92] */
+        .menu-btn {
+            width: 90%;
+            padding: 20px;
+            margin: 15px 0; /* Clearer spacing based on feedback  */
+            border: none;
+            border-radius: 18px;
+            background-color: white;
+            color: #0c4a6e;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* High-Visibility Tips Button [cite: 95] */
+        .tips-btn {
+            background-color: #f59e0b; /* Bright Amber */
+            color: white;
+            margin-top: 20px;
+        }
+
+        /* 4. Difficulty Slider  */
+        .slider-container {
+            width: 80%;
+            margin: 20px 0;
+        }
+
+        input[type=range] { width: 100%; margin: 15px 0; }
+
+        /* Animation */
+        #breathing-circle {
+            width: 180px;
+            height: 180px;
+            background-color: #7dd3fc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin: 40px 0;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); }
+            33% { transform: scale(1.4); } /* Inhale 4s */
+            92% { transform: scale(1.4); } /* Hold 7s */
+            100% { transform: scale(1); }  /* Exhale 8s */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="home" class="screen active">
+        <h1>CalmPrep</h1>
+        <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
+        <button class="menu-btn" onclick="showScreen('messages')">Motivational Messages</button>
+        <button class="menu-btn">Calming Music</button>
+        <button class="menu-btn" onclick="showScreen('interview')">Interview Practice</button>
+    </div>
+
+    <div id="breathing" class="screen">
+        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
+        <h2>4-7-8 Breathing</h2>
+        <div id="breathing-circle">Ready</div>
+        <p id="instruction">Tap Start to begin your 19-second cycle[cite: 33].</p>
+        <button class="menu-btn" id="start-btn" onclick="startBreath()" style="background: var(--primary-blue); color:white;">Start</button>
+    </div>
+
+    <div id="messages" class="screen">
+        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
+        <h2>Daily Motivation</h2>
+        <div id="quote-box" style="background:white; padding:30px; border-radius:20px; margin:40px 0; min-height:100px; display:flex; align-items:center;">
+            "You've prepared for this — trust yourself." [cite: 48]
+        </div>
+        <button class="menu-btn" onclick="nextQuote()">New Message</button>
+    </div>
+
+    <div id="interview" class="screen">
+        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
+        <h2>Interview Sim</h2>
+        <div class="slider-container">
+            <label>Difficulty Level </label>
+            <input type="range" min="1" max="3" value="1">
+            <div style="display:flex; justify-content:space-between; font-size:12px;">
+                <span>Beginner</span><span>Pro</span>
+            </div>
+        </div>
+        <div style="background:white; width:90%; padding:20px; border-radius:15px; margin-top:20px;">
+            <p><strong>Question:</strong> "Tell me about yourself" [cite: 74]</p>
+        </div>
+        <button class="menu-btn" style="background:#ef4444; color:white;">Record Response [cite: 75]</button>
+        <button class="menu-btn tips-btn">View Tips [cite: 95]</button>
+    </div>
+
+    <script>
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function startBreath() {
+            const circle = document.getElementById('breathing-circle');
+            const btn = document.getElementById('start-btn');
+            circle.style.animation = "breathe 19s infinite ease-in-out";
+            btn.style.display = "none";
+            document.getElementById('instruction').innerText = "Inhale (4s)... Hold (7s)... Exhale (8s)...";
+        }
+
+        const quotes = [
+            "You've prepared for this — trust yourself. [cite: 48]",
+            "Take a deep breath. You are ready.",
+            "Confidence comes from preparation.",
+            "Focus on what you can control.",
+            "Your skills are exactly what they need."
+        ];
+
+        function nextQuote() {
+            const box = document.getElementById('quote-box');
+            box.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+        }
+    </script>
+</body>
+</html>
