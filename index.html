@@ -47,22 +47,27 @@
 
         h1 { color: white; margin-top: 20%; font-size: 48px; font-weight: 800; letter-spacing: -1px; }
         h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+        h3 { color: #6e470c; margin-bottom: 10px; font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
 
         .menu-btn {
             width: 90%;
+            height: 20%; /* Your new tall buttons */
             padding: 18px;
-            margin: 10px 0;
+            margin: 8px 0;
             border: none;
             border-radius: 14px;
             background-color: var(--ios-glass);
             backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px);
             color: #6e470c;
-            font-size: 17px;
+            font-size: 22px;
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             -webkit-tap-highlight-color: transparent;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .start-btn {
@@ -72,6 +77,9 @@
             margin-bottom: 60px;
             font-size: 19px;
             font-weight: 700;
+            /* Resetting height for the Welcome & Start buttons */
+            height: auto; 
+            padding: 22px 40px;
         }
 
         .back-link {
@@ -84,7 +92,6 @@
             cursor: pointer;
         }
 
-        /* --- BREATHING CIRCLE ANIMATION --- */
         #breathing-circle {
             width: 180px; height: 180px;
             background-color: #fcc37d;
@@ -97,12 +104,11 @@
             box-shadow: 0 0 40px rgba(161, 79, 3, 0.3);
         }
 
-        /* 19s Total: Inhale 4s, Hold 7s, Exhale 8s */
         @keyframes breathe-478 {
             0% { transform: scale(1); }
-            21% { transform: scale(1.5); } /* End Inhale at 4s */
-            58% { transform: scale(1.5); } /* End Hold at 11s */
-            100% { transform: scale(1); }  /* End Exhale at 19s */
+            21% { transform: scale(1.5); }
+            58% { transform: scale(1.5); }
+            100% { transform: scale(1); }
         }
 
         #now-playing-container {
@@ -130,7 +136,7 @@
 
     <div id="home" class="screen">
         <button class="back-link" onclick="showScreen('welcome')">← Back to Start</button>
-        <h2 style="color:white;">Main Menu</h2>
+        <h3>Main Menu</h3>
         <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
         <button class="menu-btn" onclick="showScreen('messages')">Motivational Messages</button>
         <button class="menu-btn" onclick="showScreen('music')">Calming Music</button>
@@ -164,7 +170,7 @@
         </div>
         <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Piano Rain 🎹')">Piano Rain 🎹</button>
         <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Ocean Waves 🌊')">Ocean Waves 🌊</button>
-        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px;">Stop Music</button>
+        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px; height:auto;">Stop Music</button>
     </div>
 
     <div id="interview" class="screen">
@@ -173,7 +179,7 @@
         <div style="background:white; width:90%; padding:25px; border-radius:20px; margin-top:20px; box-sizing:border-box;">
             <p style="color:#6e470c; font-size:18px; line-height:1.4;"><strong>Question:</strong><br>"Tell me about yourself"</p>
         </div>
-        <button class="menu-btn" style="background:#ef4444; color:white; margin-top:30px;">Record Response</button>
+        <button class="menu-btn" style="background:#ef4444; color:white; margin-top:30px; height:auto;">Record Response</button>
     </div>
 
     <script>
@@ -186,7 +192,6 @@
             document.getElementById(id).classList.add('active');
         }
 
-        /* Breathing Logic */
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
             const btn = document.getElementById('breath-start-btn');
@@ -208,12 +213,11 @@
             const btn = document.getElementById('breath-start-btn');
             circle.style.animation = "none";
             circle.innerText = "Ready";
-            btn.style.display = "block";
+            btn.style.display = "flex";
             clearInterval(breathInterval);
             showScreen('home');
         }
 
-        /* Music Logic */
         function playTrack(url, title) {
             player.src = url; player.play();
             document.getElementById('track-title').innerText = title;
@@ -230,7 +234,6 @@
             playBtn.innerText = "▶";
         }
 
-        /* Messages Logic */
         const quotes = ["You are prepared.", "Deep breaths.", "Trust yourself.", "You've got this."];
         function nextQuote() {
             document.getElementById('quote-box').innerText = quotes[Math.floor(Math.random() * quotes.length)];
