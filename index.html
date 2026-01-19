@@ -11,7 +11,7 @@
         :root {
             --primary-blue: #a14f03; 
             --bg-gradient: linear-gradient(180deg, #f7c899 0%, #d7995b 100%);
-            --ios-glass: rgba(255, 255, 255, 0.7);
+            --ios-glass: rgba(255, 255, 255, 0.4);
         }
 
         body {
@@ -45,82 +45,159 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { color: white; margin-top: 20%; font-size: 48px; font-weight: 800; letter-spacing: -1px; }
-        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
-        h3 { color: #6e470c; margin-bottom: 10px; font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
+        h1 { color: white; margin-top: 7%; font-size: 48px; font-weight: 900; letter-spacing: -1px; }
+        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 38px; font-weight: 700; letter-spacing: -0.5px; }
+        h3 { color: #6e470c; margin-bottom: 10px; font-size: 40px; font-weight: 1000; letter-spacing: -0.5px; }
+        h4 { color: #915d0f; margin-bottom: 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        p { color: white; font-size: 20px; font-weight: 500;}
+        h5 { color: rgb(164, 85, 12); margin-top: 0%; margin-bottom: 5%; font-size: 140px; font-weight: 1000; letter-spacing: -0.1px; line-height: 75%;}
+
+        /* --- UI ELEMENTS --- */
+        .menu-btn, .ios-card, .fav-item, .text-input {
+            width: 90%;
+            background-color: var(--ios-glass);
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
 
         .menu-btn {
-            width: 90%;
-            height: 20%; /* Your new tall buttons */
+            height: 20%;
             padding: 18px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 14px;
-            background-color: var(--ios-glass);
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
+            margin: 12px 0;
             color: #6e470c;
             font-size: 22px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            -webkit-tap-highlight-color: transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
+        /* Disabled Button Style */
+        .menu-btn.disabled {
+            opacity: 0.6;
+            background-color: rgba(0,0,0,0.1);
+            color: #555;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        .button-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 90%;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .button-row .menu-btn { width: 100%; margin: 0; height: auto; padding: 20px; }
+
+        .menu-btn2 {
+            height: 20%;
+            padding: 18px;
+            margin: 12px 0;
+            color: #c7c7c7;
+            font-size: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            text-decoration: none;
+            box-sizing: border-box;
+            width: 90%;
+            background-color: rgba(121, 121, 121, 0.422);
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(188, 188, 188, 0.3);
+            border-radius: 20px;
+        }
+
+        .ios-card {
+            padding: 30px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            color: #6e470c;
+            position: relative;
+        }
+
+        /* --- Interview Specific Styles --- */
+        .interviewer-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            background-color: #ddd;
+            object-fit: cover;
+        }
+
+        .text-input {
+            height: auto;
+            padding: 20px;
+            font-size: 18px;
+            color: #6e470c;
+            outline: none;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .text-input::placeholder { color: #999; }
+
+        .feedback-msg {
+            font-size: 16px;
+            font-weight: 700;
+            min-height: 24px;
+            margin-top: 10px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .heart-btn {
+            position: absolute; bottom: 15px; right: 20px;
+            font-size: 28px; background: none; border: none; cursor: pointer;
+        }
+        
         .start-btn {
             background-color: var(--primary-blue);
             color: white;
-            margin-top: auto;
-            margin-bottom: 60px;
-            font-size: 19px;
-            font-weight: 700;
-            /* Resetting height for the Welcome & Start buttons */
-            height: auto; 
-            padding: 22px 40px;
+            margin-top: auto; margin-bottom: 60px;
+            font-size: 19px; font-weight: 700; height: auto; padding: 22px 40px;
+            backdrop-filter: none; border: none;
         }
 
         .back-link {
-            align-self: flex-start;
-            background: none;
-            border: none;
-            font-size: 17px;
-            color: white;
-            padding: 10px 0;
-            cursor: pointer;
+            align-self: flex-start; background: none; border: none;
+            font-size: 17px; color: white; padding: 10px 0; cursor: pointer;
+        }
+
+        #favorites-list {
+            width: 100%; display: flex; flex-direction: column; align-items: center;
+            overflow-y: auto; max-height: 70vh; padding-bottom: 50px;
+        }
+        .fav-item {
+            font-size: 18px; font-weight: 600; padding: 20px; margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.6); color: #6e470c; text-align: left;
         }
 
         #breathing-circle {
-            width: 180px; height: 180px;
-            background-color: #fcc37d;
-            border-radius: 50%;
+            width: 180px; height: 180px; background-color: #fcc37d; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            color: var(--primary-blue); 
-            font-weight: 700;
-            font-size: 24px;
-            margin: 60px 0;
+            color: var(--primary-blue); font-weight: 700; font-size: 24px; margin: 60px 0;
             box-shadow: 0 0 40px rgba(161, 79, 3, 0.3);
         }
-
         @keyframes breathe-478 {
             0% { transform: scale(1); }
             21% { transform: scale(1.5); }
             58% { transform: scale(1.5); }
             100% { transform: scale(1); }
-        }
-
-        #now-playing-container {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            width: 90%;
-            padding: 24px;
-            border-radius: 24px;
-            margin-bottom: 25px;
-            color: #6e470c;
-            border: 1px solid rgba(255,255,255,0.3);
         }
     </style>
 </head>
@@ -129,7 +206,8 @@
     <audio id="main-player" loop></audio>
 
     <div id="welcome" class="screen active">
-        <h1>Welcome to <br>CalmPrep</h1>
+        <h1>Welcome to </h1>
+        <h5>Calm<br>Prep</h5>
         <p style="color:white; opacity:0.8;">Take your time to relax</p>
         <button class="menu-btn start-btn" onclick="showScreen('home')">Start</button>
     </div>
@@ -137,10 +215,54 @@
     <div id="home" class="screen">
         <button class="back-link" onclick="showScreen('welcome')">← Back to Start</button>
         <h3>Main Menu</h3>
+        <h4>Choose your calming method:</h4>
         <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
         <button class="menu-btn" onclick="showScreen('messages')">Motivational Messages</button>
         <button class="menu-btn" onclick="showScreen('music')">Calming Music</button>
-        <button class="menu-btn" onclick="showScreen('interview')">Interview Practice</button>
+        <button class="menu-btn" onclick="showScreen('interview-menu')">Interview Practice</button>
+    </div>
+
+    <div id="interview-menu" class="screen">
+        <button class="back-link" onclick="showScreen('home')">← Back</button>
+        <h2>Select Profession</h2>
+        
+        <button class="menu-btn" onclick="startInterview('cs')">
+            💻 Computer Science
+        </button>
+        
+        <button class="menu-btn disabled">
+            🎨 Graphic Design 🔒
+        </button>
+        
+        <button class="menu-btn disabled">
+            📈 Business Mgmt 🔒
+        </button>
+    </div>
+
+    <div id="interview-room" class="screen">
+        <button class="back-link" onclick="quitInterview()">✕ Quit</button>
+        
+        <img src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg" alt="Interviewer" class="interviewer-avatar">
+        
+        <div class="ios-card" style="padding: 25px;">
+            <p id="interviewer-text" style="color:#6e470c; margin:0; font-size:20px; font-weight:600; line-height:1.4;">
+                "Hello. Before we begin, what is your name?"
+            </p>
+        </div>
+
+        <div id="feedback-display" class="feedback-msg">Good job!</div>
+
+        <input type="text" id="user-response" class="text-input" placeholder="Type your answer here..." autocomplete="off">
+        
+        <button class="menu-btn start-btn" style="margin-top: 20px; width: 100%;" onclick="submitAnswer()">Submit Answer</button>
+    </div>
+
+    <div id="interview-result" class="screen">
+        <button class="back-link" onclick="showScreen('interview-menu')">← Back to Menu</button>
+        <h2 id="result-title" style="margin-top:50px; font-size:36px;">Result</h2>
+        <div class="ios-card" id="result-message">
+            </div>
+        <button class="menu-btn start-btn" onclick="showScreen('interview-menu')">Done</button>
     </div>
 
     <div id="breathing" class="screen">
@@ -154,44 +276,244 @@
     <div id="messages" class="screen">
         <button class="back-link" onclick="showScreen('home')">← Back</button>
         <h2>Daily Motivation</h2>
-        <div id="quote-box" style="background:white; padding:35px; border-radius:22px; margin:40px 0; min-height:120px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:600; color:#6e470c; line-height:1.4;">
-            "You've prepared for this — trust yourself."
+        <div id="quote-box" class="ios-card" style="min-height:150px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:600; line-height:1.4;">
+            <span id="quote-text">"You've prepared for this — trust yourself."</span>
+            <button class="heart-btn" onclick="toggleFavorite()" id="heart-icon">🤍</button>
         </div>
-        <button class="menu-btn" onclick="nextQuote()">New Message</button>
+        <div class="button-row">
+            <button class="menu-btn" onclick="prevQuote()">Back</button>
+            <button class="menu-btn" onclick="nextQuote()">Next</button>
+        </div>
+        <button class="menu-btn" style="height:auto; padding:15px; margin-top:20px; font-size:18px; opacity:0.9;" onclick="showFavorites()">★ View Your Favorites</button>
+    </div>
+
+    <div id="favorites" class="screen">
+        <button class="back-link" onclick="showScreen('messages')">← Back to Messages</button>
+        <h2>Your Favorites</h2>
+        <div id="favorites-list"><p style="margin-top:50px; opacity:0.7;">No favorites saved yet.</p></div>
     </div>
 
     <div id="music" class="screen">
         <button class="back-link" onclick="showScreen('home')">✕ Close</button>
-        <h2>Calming Music</h2>
-        <div id="now-playing-container">
+        <h2 style="color:white;">Calming Music</h2>
+        <div class="ios-card" style="margin-bottom: 20px;">
             <p style="margin:0; font-size:12px; font-weight:700; opacity:0.6; text-transform:uppercase;">Now Playing</p>
             <p id="track-title" style="font-size:20px; font-weight:700; margin:12px 0;">No Track Selected</p>
-            <button onclick="togglePlay()" id="play-pause-btn" class="menu-btn" style="width:54px; height:54px; border-radius:50%; padding:0; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white;">▶</button>
+            <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer;">▶</button>
         </div>
-        <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Piano Rain 🎹')">Piano Rain 🎹</button>
-        <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Ocean Waves 🌊')">Ocean Waves 🌊</button>
-        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px; height:auto;">Stop Music</button>
-    </div>
-
-    <div id="interview" class="screen">
-        <button class="back-link" onclick="showScreen('home')">← Back</button>
-        <h2>Interview Sim</h2>
-        <div style="background:white; width:90%; padding:25px; border-radius:20px; margin-top:20px; box-sizing:border-box;">
-            <p style="color:#6e470c; font-size:18px; line-height:1.4;"><strong>Question:</strong><br>"Tell me about yourself"</p>
-        </div>
-        <button class="menu-btn" style="background:#ef4444; color:white; margin-top:30px; height:auto;">Record Response</button>
+        <button class="menu-btn" style="height:auto; padding:20px;" onclick="playTrack('mysong1.mp3', 'Parfum detoiles 🎹')">Parfum detoiles 🎹</button>
+        <button class="menu-btn" style="height:auto; padding:20px;" onclick="playTrack('mysong2.mp3', 'Marginalia #65 🌊')">Marginalia 🌊</button>
+        <button class="menu-btn2" style="height:auto; padding:20px;">More songs coming soon!</button>
+        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px; height:auto; padding:15px;">Stop Music</button>
     </div>
 
     <script>
         const player = document.getElementById('main-player');
         const playBtn = document.getElementById('play-pause-btn');
-        let breathInterval;
+        
+        // --- DATA ---
+        const quotes = [
+            "You are prepared.", 
+            "Deep breaths.", 
+            "Trust yourself.", 
+            "You've got this.",
+            "You have done the work. Now, let the results take care of themselves.",
+            "A single interview does not define your worth or your future.",
+            "Exhale the pressure. Inhale the possibility.",
+            "You are more than enough, exactly as you are in this moment.",
+            "Think of the interview as a conversation, not an interrogation.",
+            "Your only job right now is to be present and be yourself.",
+            "Even if you feel nervous, you are still capable of doing a great job.",
+            "Focus on how far you've come, not just where you're going.",
+            "It is okay to take a moment to think before you speak.",
+            "You belong in the room where these conversations are happening.",
+            "One step at a time. One breath at a time. You are doing great.",
+            "Your preparation has built a foundation. Trust it to support you.",
+            "You are not just being interviewed; you are also seeing if they are right for you.",
+            "Release the need for perfection. Authenticity is what connects people.",
+            "This is just one chapter. You are the author of the whole book.",
+            "Quiet the 'what-ifs' and listen to your 'I can.'",
+            "The world needs exactly what you have to offer."
+        ];
+        let quoteHistory = [];
+        let historyIndex = -1;
+        let favorites = [];
+
+        // --- INTERVIEW LOGIC ---
+        let interviewState = 'naming'; // 'naming' or 'questioning'
+        let userName = '';
+        let currentQuestionIndex = 0;
+        let interviewScore = 0;
+        let currentInterviewQuestions = []; // Stores the 4 random questions for this session
+
+        // Large Master Bank of Questions
+        const masterQuestionBank = [
+            { q: "What data type is used for 'true' or 'false' values?", a: "boolean" },
+            { q: "What does HTML stand for?", a: "hypertext" },
+            { q: "In Python, which keyword defines a function?", a: "def" },
+            { q: "What is 10 modulo 3?", a: "1" },
+            { q: "Is Python compiled or interpreted?", a: "interpreted" },
+            { q: "What does CSS stand for?", a: "cascading" }, // Cascading Style Sheets
+            { q: "What is the time complexity of looking up an item in a hash map?", a: "constant" }, // or O(1) but keyword is easier
+            { q: "Which symbol is used to comment in Python?", a: "#" },
+            { q: "Which SQL command retrieves data?", a: "select" },
+            { q: "What is the binary representation of 2?", a: "10" },
+            { q: "Arrays in most languages start at which index?", a: "0" },
+            { q: "Which data structure follows LIFO (Last In First Out)?", a: "stack" }
+        ];
+
+        function startInterview(jobType) {
+            if (jobType !== 'cs') return; 
+            
+            // 1. Reset Variables
+            interviewState = 'naming';
+            userName = '';
+            currentQuestionIndex = 0;
+            interviewScore = 0;
+            
+            // 2. Randomize Questions: Shuffle and pick 4
+            // We create a copy [...masterQuestionBank] to not mess up original
+            const shuffled = [...masterQuestionBank].sort(() => 0.5 - Math.random());
+            currentInterviewQuestions = shuffled.slice(0, 4);
+
+            // 3. Reset UI
+            document.getElementById('interviewer-text').innerText = "Hello. Before we begin, what is your name?";
+            document.getElementById('user-response').value = "";
+            document.getElementById('user-response').placeholder = "Enter your name...";
+            document.getElementById('feedback-display').style.opacity = 0;
+            
+            showScreen('interview-room');
+        }
+
+        function submitAnswer() {
+            const inputField = document.getElementById('user-response');
+            const userText = inputField.value.trim();
+            const textBox = document.getElementById('interviewer-text');
+            const feedback = document.getElementById('feedback-display');
+
+            if (userText === "") return; 
+
+            if (interviewState === 'naming') {
+                // Phase 1: Capture Name
+                userName = userText;
+                interviewState = 'questioning';
+                inputField.value = "";
+                inputField.placeholder = "Type your answer...";
+                
+                // Ask first question from our random list
+                textBox.innerText = `${userName}, ${currentInterviewQuestions[0].q}`;
+            } 
+            else if (interviewState === 'questioning') {
+                // Phase 2: Check Answer
+                const currentQ = currentInterviewQuestions[currentQuestionIndex];
+                
+                // Flexible checking (lowercase)
+                const isCorrect = userText.toLowerCase().includes(currentQ.a);
+
+                // Show Feedback
+                feedback.style.opacity = 1;
+                if (isCorrect) {
+                    interviewScore++;
+                    feedback.innerText = "Good job, let's continue.";
+                    feedback.style.color = "#dcfce7"; 
+                } else {
+                    feedback.innerText = "Mhm okay, let's continue.";
+                    feedback.style.color = "#fee2e2"; 
+                }
+
+                // Wait 1.5s then next question
+                setTimeout(() => {
+                    feedback.style.opacity = 0;
+                    currentQuestionIndex++;
+                    inputField.value = "";
+
+                    if (currentQuestionIndex < currentInterviewQuestions.length) {
+                        // Next Question
+                        textBox.innerText = `${userName}, ${currentInterviewQuestions[currentQuestionIndex].q}`;
+                    } else {
+                        // End of Interview
+                        finishInterview();
+                    }
+                }, 1500);
+            }
+        }
+
+        function finishInterview() {
+            showScreen('interview-result');
+            const resultTitle = document.getElementById('result-title');
+            const resultMsg = document.getElementById('result-message');
+            
+            if (interviewScore >= 3) {
+                resultTitle.innerText = "Congratulations! 🎉";
+                resultMsg.innerHTML = `<h3>You're Hired!</h3><p style="color:#6e470c">Great work, ${userName}. You answered ${interviewScore}/4 questions correctly.</p>`;
+            } else {
+                resultTitle.innerText = "Interview Complete";
+                resultMsg.innerHTML = `<h3>Don't give up!</h3><p style="color:#6e470c">You got ${interviewScore}/4 correct. Review your basics and try again, ${userName}!</p>`;
+            }
+        }
+
+        function quitInterview() {
+            showScreen('interview-menu');
+        }
+
+        // --- STANDARD APP LOGIC ---
+        window.onload = function() { nextQuote(); };
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
+        // Motivational Quotes Logic
+        function nextQuote() {
+            if (historyIndex < quoteHistory.length - 1) {
+                historyIndex++;
+                displayQuote(quoteHistory[historyIndex]);
+            } else {
+                const randomQ = quotes[Math.floor(Math.random() * quotes.length)];
+                quoteHistory.push(randomQ);
+                historyIndex++;
+                displayQuote(randomQ);
+            }
+        }
+        function prevQuote() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                displayQuote(quoteHistory[historyIndex]);
+            }
+        }
+        function displayQuote(text) {
+            document.getElementById('quote-text').innerText = text;
+            updateHeartIcon(text);
+        }
+        function toggleFavorite() {
+            const currentText = document.getElementById('quote-text').innerText;
+            const index = favorites.indexOf(currentText);
+            if (index === -1) favorites.push(currentText);
+            else favorites.splice(index, 1);
+            updateHeartIcon(currentText);
+        }
+        function updateHeartIcon(text) {
+            document.getElementById('heart-icon').innerText = favorites.includes(text) ? "❤️" : "🤍";
+        }
+        function showFavorites() {
+            showScreen('favorites');
+            const list = document.getElementById('favorites-list');
+            list.innerHTML = "";
+            if (favorites.length === 0) {
+                list.innerHTML = '<p style="margin-top:50px; opacity:0.7;">No favorites saved yet.<br>Tap the 🤍 to save.</p>';
+                return;
+            }
+            favorites.forEach(fav => {
+                const item = document.createElement('div');
+                item.className = 'fav-item';
+                item.innerText = fav;
+                list.appendChild(item);
+            });
+        }
+
+        // Breathing Logic
+        let breathInterval;
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
             const btn = document.getElementById('breath-start-btn');
@@ -200,43 +522,32 @@
             updateBreathText(); 
             breathInterval = setInterval(updateBreathText, 19000);
         }
-
         function updateBreathText() {
             const circleText = document.getElementById('breathing-circle');
             circleText.innerText = "Inhale";
             setTimeout(() => { circleText.innerText = "Hold"; }, 4000);
             setTimeout(() => { circleText.innerText = "Exhale"; }, 11000);
         }
-
         function stopBreathing() {
             const circle = document.getElementById('breathing-circle');
             const btn = document.getElementById('breath-start-btn');
-            circle.style.animation = "none";
-            circle.innerText = "Ready";
-            btn.style.display = "flex";
+            circle.style.animation = "none"; circle.innerText = "Ready"; btn.style.display = "flex";
             clearInterval(breathInterval);
             showScreen('home');
         }
 
+        // Music Logic
         function playTrack(url, title) {
             player.src = url; player.play();
-            document.getElementById('track-title').innerText = title;
-            playBtn.innerText = "⏸";
+            document.getElementById('track-title').innerText = title; playBtn.innerText = "⏸";
         }
         function togglePlay() {
             if (!player.src) return;
-            if (player.paused) { player.play(); playBtn.innerText = "⏸"; }
-            else { player.pause(); playBtn.innerText = "▶"; }
+            if (player.paused) { player.play(); playBtn.innerText = "⏸"; } else { player.pause(); playBtn.innerText = "▶"; }
         }
         function stopMusic() {
             player.pause(); player.src = "";
-            document.getElementById('track-title').innerText = "No Track Selected";
-            playBtn.innerText = "▶";
-        }
-
-        const quotes = ["You are prepared.", "Deep breaths.", "Trust yourself.", "You've got this."];
-        function nextQuote() {
-            document.getElementById('quote-box').innerText = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('track-title').innerText = "No Track Selected"; playBtn.innerText = "▶";
         }
     </script>
 </body>
