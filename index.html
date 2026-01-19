@@ -10,7 +10,8 @@
     <style>
         :root {
             --primary-blue: #0369a1;
-            --bg-gradient: linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%);
+            /* Using your preferred gradient */
+            --bg-gradient: linear-gradient(180deg, #99d1f7 0%, #5ba6d7 100%);
         }
 
         body {
@@ -22,7 +23,6 @@
             overflow: hidden;
         }
 
-        /* 2. Full Screen Layout */
         .screen {
             display: none;
             flex-direction: column;
@@ -33,15 +33,17 @@
             text-align: center;
         }
 
+        /* The welcome screen is active by default */
         .active { display: flex; }
 
-        h1, h2 { color: var(--primary-blue); margin-bottom: 30px; }
+        h1 { color: white; margin-top: 20%; font-size: 32px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: var(--primary-blue); margin-bottom: 30px; }
+        p.tagline { color: white; opacity: 0.9; margin-bottom: 40px; }
 
-        /* 3. Improved Button Spacing & Style [cite: 92] */
         .menu-btn {
             width: 90%;
             padding: 20px;
-            margin: 15px 0; /* Clearer spacing based on feedback  */
+            margin: 12px 0;
             border: none;
             border-radius: 18px;
             background-color: white;
@@ -50,49 +52,56 @@
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
 
-        /* High-Visibility Tips Button [cite: 95] */
+        /* Style for the 'Start' button on welcome screen */
+        .start-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            margin-top: auto; /* Pushes button toward the bottom */
+            margin-bottom: 60px;
+        }
+
         .tips-btn {
-            background-color: #f59e0b; /* Bright Amber */
+            background-color: #f59e0b;
             color: white;
             margin-top: 20px;
         }
 
-        /* 4. Difficulty Slider  */
-        .slider-container {
-            width: 80%;
-            margin: 20px 0;
-        }
-
+        .slider-container { width: 80%; margin: 20px 0; }
         input[type=range] { width: 100%; margin: 15px 0; }
 
-        /* Animation */
         #breathing-circle {
-            width: 180px;
-            height: 180px;
+            width: 180px; height: 180px;
             background-color: #7dd3fc;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--primary-blue);
-            font-weight: bold;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--primary-blue); font-weight: bold;
             margin: 40px 0;
         }
 
         @keyframes breathe {
             0% { transform: scale(1); }
-            33% { transform: scale(1.4); } /* Inhale 4s */
-            92% { transform: scale(1.4); } /* Hold 7s */
-            100% { transform: scale(1); }  /* Exhale 8s */
+            33% { transform: scale(1.4); } 
+            92% { transform: scale(1.4); } 
+            100% { transform: scale(1); }  
         }
     </style>
 </head>
 <body>
 
-    <div id="home" class="screen active">
-        <h1>CalmPrep</h1>
+    <div id="welcome" class="screen active">
+        <h1>Welcome to <br>CalmPrep</h1>
+        <p class="tagline">by The Clankers</p>
+        
+        <button class="menu-btn start-btn" onclick="showScreen('home')">Start</button>
+    </div>
+
+    <div id="home" class="screen">
+        <button onclick="showScreen('welcome')" style="align-self: flex-start; background:none; border:none; font-size:18px; color:white; cursor:pointer;">← Go Back</button>
+        
+        <h2 style="color:white; margin-top:20px;">Main Menu</h2>
         <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
         <button class="menu-btn" onclick="showScreen('messages')">Motivational Messages</button>
         <button class="menu-btn">Calming Music</button>
@@ -103,15 +112,15 @@
         <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
         <h2>4-7-8 Breathing</h2>
         <div id="breathing-circle">Ready</div>
-        <p id="instruction">Tap Start to begin your 19-second cycle[cite: 33].</p>
+        <p id="instruction">Tap Start to begin your 19-second cycle.</p>
         <button class="menu-btn" id="start-btn" onclick="startBreath()" style="background: var(--primary-blue); color:white;">Start</button>
     </div>
 
     <div id="messages" class="screen">
         <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
         <h2>Daily Motivation</h2>
-        <div id="quote-box" style="background:white; padding:30px; border-radius:20px; margin:40px 0; min-height:100px; display:flex; align-items:center;">
-            "You've prepared for this — trust yourself." [cite: 48]
+        <div id="quote-box" style="background:white; padding:30px; border-radius:20px; margin:40px 0; min-height:100px; display:flex; align-items:center; justify-content:center;">
+            "You've prepared for this — trust yourself."
         </div>
         <button class="menu-btn" onclick="nextQuote()">New Message</button>
     </div>
@@ -120,25 +129,27 @@
         <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
         <h2>Interview Sim</h2>
         <div class="slider-container">
-            <label>Difficulty Level </label>
+            <label>Difficulty Level</label>
             <input type="range" min="1" max="3" value="1">
             <div style="display:flex; justify-content:space-between; font-size:12px;">
                 <span>Beginner</span><span>Pro</span>
             </div>
         </div>
         <div style="background:white; width:90%; padding:20px; border-radius:15px; margin-top:20px;">
-            <p><strong>Question:</strong> "Tell me about yourself" [cite: 74]</p>
+            <p><strong>Question:</strong> "Tell me about yourself"</p>
         </div>
-        <button class="menu-btn" style="background:#ef4444; color:white;">Record Response [cite: 75]</button>
-        <button class="menu-btn tips-btn">View Tips [cite: 95]</button>
+        <button class="menu-btn" style="background:#ef4444; color:white;">Record Response</button>
+        <button class="menu-btn tips-btn">View Tips</button>
     </div>
 
     <script>
+        // Logic to switch between screens
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
+        // Breathing logic
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
             const btn = document.getElementById('start-btn');
@@ -147,12 +158,14 @@
             document.getElementById('instruction').innerText = "Inhale (4s)... Hold (7s)... Exhale (8s)...";
         }
 
+        // Motivational quotes logic
         const quotes = [
-            "You've prepared for this — trust yourself. [cite: 48]",
+            "You've prepared for this — trust yourself.",
             "Take a deep breath. You are ready.",
             "Confidence comes from preparation.",
             "Focus on what you can control.",
-            "Your skills are exactly what they need."
+            "Your skills are exactly what they need.",
+            "Believe in your ability to succeed."
         ];
 
         function nextQuote() {
