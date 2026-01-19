@@ -102,6 +102,18 @@
             margin-top: 10px;
         }
 
+        /* --- SCROLLING CONTAINER --- */
+        .scroll-content {
+            width: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1; /* Takes up remaining height */
+            padding-bottom: 40px; /* Space at bottom */
+            -webkit-overflow-scrolling: touch; /* Smooth iOS scroll */
+        }
+        
         .button-row .menu-btn {
             width: 100%;
             margin: 0;
@@ -254,6 +266,15 @@
             box-shadow: 0 0 40px rgba(161, 79, 3, 0.3);
         }
 
+        /* --- PLAYER CONTROLS --- */
+        .player-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
         @keyframes breathe-478 {
             0% { transform: scale(1); }
             21% { transform: scale(1.5); }
@@ -345,15 +366,27 @@
     <div id="music" class="screen">
         <button class="back-link" onclick="showScreen('home')">✕ Close</button>
         <h2 style="color:white;">Calming Music</h2>
-        <div class="ios-card" style="margin-bottom: 20px;">
-            <p style="margin:0; font-size:12px; font-weight:700; opacity:0.6; text-transform:uppercase;">Now Playing</p>
-            <p id="track-title" style="font-size:20px; font-weight:700; margin:12px 0;">No Track Selected</p>
-            <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer;">▶</button>
+        
+            <div class="ios-card" style="margin-bottom: 20px;">
+                <p style="margin:0; font-size:12px; font-weight:700; opacity:0.6; text-transform:uppercase;">Now Playing</p>
+                <p id="track-title" style="font-size:20px; font-weight:700; margin:12px 0;">No Track Selected</p>
+                
+                <div class="player-row">
+                    <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">▶</button>
+                    <button onclick="stopMusic()" class="control-btn" style="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">⏹</button>
+                </div>
+            </div>
+            <!-- <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer;">⏹</button> -->
+        <div class="scroll-content">
+            <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Parfum detoiles 🎹')">Parfum detoiles 🎹</button>
+            <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Marginalia #65 🌊')">Marginalia 🌊</button>
+            <button class="menu-btn" onclick="playTrack('mysong3.mp3', 'ziggy')">ziegeler 1</button>
+            <button class="menu-btn" onclick="playTrack('mysong4.mp3', 'werner 2')">werner 2</button>
+            <button class="menu-btn" onclick="playTrack('mysong5.mp3', 'Jeffrey')">Epstein</button>
+            <button class="menu-btn" onclick="playTrack('mysong6.mp3', 'kjesiii')">alooo</button>
+            <button class="menu-btn" onclick="playTrack('mysong7.mp3', 'kizoooo')">kosha mona</button>
+            <button class="menu-btn" style="color:rgba(110, 71, 12, 0.5);">More coming soon...</button>
         </div>
-        <button class="menu-btn" style="height:auto; padding:20px;" onclick="playTrack('mysong1.mp3', 'Parfum detoiles 🎹')">Parfum detoiles 🎹</button>
-        <button class="menu-btn" style="height:auto; padding:20px;" onclick="playTrack('mysong2.mp3', 'Marginalia #65 🌊')">Marginalia 🌊</button>
-        <button class="menu-btn2" style="height:auto; padding:20px;">More songs coming soon!</button>
-        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px; height:auto; padding:15px;">Stop Music</button>
     </div>
 
     <script>
