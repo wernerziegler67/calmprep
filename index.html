@@ -9,168 +9,231 @@
     
     <style>
         :root {
-            --primary-blue: #0369a1;
-            /* Using your preferred gradient */
-            --bg-gradient: linear-gradient(180deg, #99d1f7 0%, #5ba6d7 100%);
+            --primary-blue: #a14f03; 
+            --bg-gradient: linear-gradient(180deg, #f7c899 0%, #d7995b 100%);
+            --ios-glass: rgba(255, 255, 255, 0.7);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
             background: var(--bg-gradient);
             height: 100vh;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .screen {
             display: none;
+            opacity: 0;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 44px 20px;
             height: 100vh;
             box-sizing: border-box;
             text-align: center;
         }
 
-        /* The welcome screen is active by default */
-        .active { display: flex; }
+        .active { 
+            display: flex; 
+            animation: iosFadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
 
-        h1 { color: white; margin-top: 20%; font-size: 32px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h2 { color: var(--primary-blue); margin-bottom: 30px; }
-        p.tagline { color: white; opacity: 0.9; margin-bottom: 40px; }
+        @keyframes iosFadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { color: white; margin-top: 20%; font-size: 48px; font-weight: 800; letter-spacing: -1px; }
+        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
 
         .menu-btn {
             width: 90%;
-            padding: 20px;
-            margin: 12px 0;
+            padding: 18px;
+            margin: 10px 0;
             border: none;
-            border-radius: 18px;
-            background-color: white;
-            color: #0c4a6e;
-            font-size: 18px;
+            border-radius: 14px;
+            background-color: var(--ios-glass);
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            color: #6e470c;
+            font-size: 17px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             -webkit-tap-highlight-color: transparent;
             cursor: pointer;
         }
 
-        /* Style for the 'Start' button on welcome screen */
         .start-btn {
             background-color: var(--primary-blue);
             color: white;
-            margin-top: auto; /* Pushes button toward the bottom */
+            margin-top: auto;
             margin-bottom: 60px;
+            font-size: 19px;
+            font-weight: 700;
         }
 
-        .tips-btn {
-            background-color: #f59e0b;
+        .back-link {
+            align-self: flex-start;
+            background: none;
+            border: none;
+            font-size: 17px;
             color: white;
-            margin-top: 20px;
+            padding: 10px 0;
+            cursor: pointer;
         }
 
-        .slider-container { width: 80%; margin: 20px 0; }
-        input[type=range] { width: 100%; margin: 15px 0; }
-
+        /* --- BREATHING CIRCLE ANIMATION --- */
         #breathing-circle {
             width: 180px; height: 180px;
-            background-color: #7dd3fc;
+            background-color: #fcc37d;
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            color: var(--primary-blue); font-weight: bold;
-            margin: 40px 0;
+            color: var(--primary-blue); 
+            font-weight: 700;
+            font-size: 24px;
+            margin: 60px 0;
+            box-shadow: 0 0 40px rgba(161, 79, 3, 0.3);
         }
 
-        @keyframes breathe {
+        /* 19s Total: Inhale 4s, Hold 7s, Exhale 8s */
+        @keyframes breathe-478 {
             0% { transform: scale(1); }
-            33% { transform: scale(1.4); } 
-            92% { transform: scale(1.4); } 
-            100% { transform: scale(1); }  
+            21% { transform: scale(1.5); } /* End Inhale at 4s */
+            58% { transform: scale(1.5); } /* End Hold at 11s */
+            100% { transform: scale(1); }  /* End Exhale at 19s */
+        }
+
+        #now-playing-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            width: 90%;
+            padding: 24px;
+            border-radius: 24px;
+            margin-bottom: 25px;
+            color: #6e470c;
+            border: 1px solid rgba(255,255,255,0.3);
         }
     </style>
 </head>
 <body>
 
+    <audio id="main-player" loop></audio>
+
     <div id="welcome" class="screen active">
         <h1>Welcome to <br>CalmPrep</h1>
-        <p class="tagline">by The Clankers</p>
-        
+        <p style="color:white; opacity:0.8;">Take your time to relax</p>
         <button class="menu-btn start-btn" onclick="showScreen('home')">Start</button>
     </div>
 
     <div id="home" class="screen">
-        <button onclick="showScreen('welcome')" style="align-self: flex-start; background:none; border:none; font-size:18px; color:white; cursor:pointer;">← Go Back</button>
-        
-        <h2 style="color:white; margin-top:20px;">Main Menu</h2>
+        <button class="back-link" onclick="showScreen('welcome')">← Back to Start</button>
+        <h2 style="color:white;">Main Menu</h2>
         <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
         <button class="menu-btn" onclick="showScreen('messages')">Motivational Messages</button>
-        <button class="menu-btn">Calming Music</button>
+        <button class="menu-btn" onclick="showScreen('music')">Calming Music</button>
         <button class="menu-btn" onclick="showScreen('interview')">Interview Practice</button>
     </div>
 
     <div id="breathing" class="screen">
-        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
-        <h2>4-7-8 Breathing</h2>
+        <button class="back-link" onclick="stopBreathing()">✕ Close</button>
+        <h2 style="color:white;">4-7-8 Method</h2>
         <div id="breathing-circle">Ready</div>
-        <p id="instruction">Tap Start to begin your 19-second cycle.</p>
-        <button class="menu-btn" id="start-btn" onclick="startBreath()" style="background: var(--primary-blue); color:white;">Start</button>
+        <p id="sub-text" style="color:white; font-weight:500;">Focus on your breath.</p>
+        <button class="menu-btn start-btn" id="breath-start-btn" onclick="startBreath()">Start</button>
     </div>
 
     <div id="messages" class="screen">
-        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
+        <button class="back-link" onclick="showScreen('home')">← Back</button>
         <h2>Daily Motivation</h2>
-        <div id="quote-box" style="background:white; padding:30px; border-radius:20px; margin:40px 0; min-height:100px; display:flex; align-items:center; justify-content:center;">
+        <div id="quote-box" style="background:white; padding:35px; border-radius:22px; margin:40px 0; min-height:120px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:600; color:#6e470c; line-height:1.4;">
             "You've prepared for this — trust yourself."
         </div>
         <button class="menu-btn" onclick="nextQuote()">New Message</button>
     </div>
 
+    <div id="music" class="screen">
+        <button class="back-link" onclick="showScreen('home')">✕ Close</button>
+        <h2>Calming Music</h2>
+        <div id="now-playing-container">
+            <p style="margin:0; font-size:12px; font-weight:700; opacity:0.6; text-transform:uppercase;">Now Playing</p>
+            <p id="track-title" style="font-size:20px; font-weight:700; margin:12px 0;">No Track Selected</p>
+            <button onclick="togglePlay()" id="play-pause-btn" class="menu-btn" style="width:54px; height:54px; border-radius:50%; padding:0; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white;">▶</button>
+        </div>
+        <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Piano Rain 🎹')">Piano Rain 🎹</button>
+        <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Ocean Waves 🌊')">Ocean Waves 🌊</button>
+        <button class="menu-btn" onclick="stopMusic()" style="background:rgba(239, 68, 68, 0.8); color:white; margin-top:20px;">Stop Music</button>
+    </div>
+
     <div id="interview" class="screen">
-        <button onclick="showScreen('home')" style="align-self: flex-start; background:none; border:none; font-size:18px;">✕</button>
+        <button class="back-link" onclick="showScreen('home')">← Back</button>
         <h2>Interview Sim</h2>
-        <div class="slider-container">
-            <label>Difficulty Level</label>
-            <input type="range" min="1" max="3" value="1">
-            <div style="display:flex; justify-content:space-between; font-size:12px;">
-                <span>Beginner</span><span>Pro</span>
-            </div>
+        <div style="background:white; width:90%; padding:25px; border-radius:20px; margin-top:20px; box-sizing:border-box;">
+            <p style="color:#6e470c; font-size:18px; line-height:1.4;"><strong>Question:</strong><br>"Tell me about yourself"</p>
         </div>
-        <div style="background:white; width:90%; padding:20px; border-radius:15px; margin-top:20px;">
-            <p><strong>Question:</strong> "Tell me about yourself"</p>
-        </div>
-        <button class="menu-btn" style="background:#ef4444; color:white;">Record Response</button>
-        <button class="menu-btn tips-btn">View Tips</button>
+        <button class="menu-btn" style="background:#ef4444; color:white; margin-top:30px;">Record Response</button>
     </div>
 
     <script>
-        // Logic to switch between screens
+        const player = document.getElementById('main-player');
+        const playBtn = document.getElementById('play-pause-btn');
+        let breathInterval;
+
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        // Breathing logic
+        /* Breathing Logic */
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
-            const btn = document.getElementById('start-btn');
-            circle.style.animation = "breathe 19s infinite ease-in-out";
+            const btn = document.getElementById('breath-start-btn');
             btn.style.display = "none";
-            document.getElementById('instruction').innerText = "Inhale (4s)... Hold (7s)... Exhale (8s)...";
+            circle.style.animation = "breathe-478 19s infinite linear";
+            updateBreathText(); 
+            breathInterval = setInterval(updateBreathText, 19000);
         }
 
-        // Motivational quotes logic
-        const quotes = [
-            "You've prepared for this — trust yourself.",
-            "Take a deep breath. You are ready.",
-            "Confidence comes from preparation.",
-            "Focus on what you can control.",
-            "Your skills are exactly what they need.",
-            "Believe in your ability to succeed."
-        ];
+        function updateBreathText() {
+            const circleText = document.getElementById('breathing-circle');
+            circleText.innerText = "Inhale";
+            setTimeout(() => { circleText.innerText = "Hold"; }, 4000);
+            setTimeout(() => { circleText.innerText = "Exhale"; }, 11000);
+        }
 
+        function stopBreathing() {
+            const circle = document.getElementById('breathing-circle');
+            const btn = document.getElementById('breath-start-btn');
+            circle.style.animation = "none";
+            circle.innerText = "Ready";
+            btn.style.display = "block";
+            clearInterval(breathInterval);
+            showScreen('home');
+        }
+
+        /* Music Logic */
+        function playTrack(url, title) {
+            player.src = url; player.play();
+            document.getElementById('track-title').innerText = title;
+            playBtn.innerText = "⏸";
+        }
+        function togglePlay() {
+            if (!player.src) return;
+            if (player.paused) { player.play(); playBtn.innerText = "⏸"; }
+            else { player.pause(); playBtn.innerText = "▶"; }
+        }
+        function stopMusic() {
+            player.pause(); player.src = "";
+            document.getElementById('track-title').innerText = "No Track Selected";
+            playBtn.innerText = "▶";
+        }
+
+        /* Messages Logic */
+        const quotes = ["You are prepared.", "Deep breaths.", "Trust yourself.", "You've got this."];
         function nextQuote() {
-            const box = document.getElementById('quote-box');
-            box.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-box').innerText = quotes[Math.floor(Math.random() * quotes.length)];
         }
     </script>
 </body>
