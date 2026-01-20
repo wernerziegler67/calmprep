@@ -109,9 +109,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1; /* Takes up remaining height */
-            padding-bottom: 40px; /* Space at bottom */
-            -webkit-overflow-scrolling: touch; /* Smooth iOS scroll */
+            flex: 1; 
+            padding-bottom: 40px; 
+            -webkit-overflow-scrolling: touch; 
         }
         
         .button-row .menu-btn {
@@ -275,6 +275,44 @@
             margin-top: 10px;
         }
 
+        /* --- FIXES FOR STABILITY --- */
+
+        /* Fixed Motivation Quote Box */
+        .quote-fixed-box {
+            height: 220px; 
+            width: 90%; 
+            display: flex;
+            align-items: center;     
+            justify-content: center; 
+            overflow-y: auto;      
+            margin-bottom: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Fixed Interview Question Box */
+        .interview-fixed-box {
+            height: 140px; 
+            width: 90%;
+            display: flex;
+            align-items: center;    
+            justify-content: center;
+            margin-bottom: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Ensure feedback message reserves space so it doesn't jump */
+        .feedback-msg {
+            height: 30px; 
+            margin-top: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         @keyframes breathe-478 {
             0% { transform: scale(1); }
             21% { transform: scale(1.5); }
@@ -296,7 +334,7 @@
     </div>
 
     <div id="home" class="screen">
-        <button class="back-link" onclick="showScreen('welcome')">← Back to Start</button>
+        <button class="back-link" onclick="showScreen('welcome')">← Back</button>
         <h3>Main Menu</h3>
         <h4>Choose your calming method:</h4>
         <button class="menu-btn" onclick="showScreen('breathing')">Breathing Exercises</button>
@@ -314,27 +352,30 @@
     </div>
 
     <div id="interview-room" class="screen">
-        <button class="back-link" onclick="quitInterview()">✕ Quit</button>
+        <button class="back-link" onclick="quitInterview()">← Back</button>
         <img src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg" alt="Interviewer" class="interviewer-avatar">
-        <div class="ios-card" style="padding: 25px;">
+        
+        <div class="ios-card interview-fixed-box">
             <p id="interviewer-text" style="color:#6e470c; margin:0; font-size:20px; font-weight:600; line-height:1.4;">
                 "Hello. Before we begin, what is your name?"
             </p>
         </div>
+
         <div id="feedback-display" class="feedback-msg">Good job!</div>
-        <input type="text" id="user-response" class="text-input" placeholder="Type your answer here..." autocomplete="off">
+        
+        <input type="text" id="user-response" class="text-input" style="margin-top: 10px;" placeholder="Type your answer here..." autocomplete="off">
         <button class="menu-btn start-btn" style="margin-top: 20px; width: 100%;" onclick="submitAnswer()">Submit Answer</button>
     </div>
 
     <div id="interview-result" class="screen">
-        <button class="back-link" onclick="showScreen('interview-menu')">← Back to Menu</button>
+        <button class="back-link" onclick="showScreen('interview-menu')">← Back</button>
         <h2 id="result-title" style="margin-top:50px; font-size:36px;">Result</h2>
         <div class="ios-card" id="result-message"></div>
         <button class="menu-btn start-btn" onclick="showScreen('interview-menu')">Done</button>
     </div>
 
     <div id="breathing" class="screen">
-        <button class="back-link" onclick="stopBreathing()">✕ Close</button>
+        <button class="back-link" onclick="stopBreathing()">← Back</button>
         <h2 style="color:white;">4-7-8 Method</h2>
         <div id="breathing-circle">Ready</div>
         <p id="sub-text" style="color:white; font-weight:500;">Focus on your breath.</p>
@@ -344,9 +385,11 @@
     <div id="messages" class="screen">
         <button class="back-link" onclick="showScreen('home')">← Back</button>
         <h2>Daily Motivation</h2>
-        <div id="quote-box" class="ios-card" style="min-height:150px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:600; line-height:1.4; margin-bottom: 5px;">
+        
+        <div id="quote-box" class="ios-card quote-fixed-box">
             <span id="quote-text">"You've prepared for this — trust yourself."</span>
         </div>
+
         <div class="like-container">
             <button class="heart-btn" onclick="toggleFavorite()" id="heart-icon">🤍</button>
         </div>
@@ -358,14 +401,14 @@
     </div>
 
     <div id="favorites" class="screen">
-        <button class="back-link" onclick="showScreen('messages')">← Back to Messages</button>
+        <button class="back-link" onclick="showScreen('messages')">← Back</button>
         <h2>Your Favorites</h2>
         <div id="favorites-list"></div>
     </div>
 
     <div id="music" class="screen">
-        <button class="back-link" onclick="showScreen('home')">✕ Close</button>
-        <h2 style="color:white;">Calming Music</h2>
+        <button class="back-link" onclick="showScreen('home')">← Back</button>
+        <h2 style="color:white; font-weight: 1000;">Calming Music</h2>
         
             <div class="ios-card" style="margin-bottom: 20px;">
                 <p style="margin:0; font-size:12px; font-weight:700; opacity:0.6; text-transform:uppercase;">Now Playing</p>
@@ -374,17 +417,15 @@
                 <div class="player-row">
                     <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">▶</button>
                     <button onclick="stopMusic()" class="control-btn" style="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">⏹</button>
+                    <button onclick="playRandom()" id="shuffle-btn" style="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">🔀</button>
                 </div>
             </div>
-            <!-- <button onclick="togglePlay()" id="play-pause-btn" style="width:54px; height:54px; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer;">⏹</button> -->
+            <!-- <button onclick="playRandom()" id="shuffle-btn" sttyle="width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; background: white; border:none; cursor:pointer; font-size: 24px;">🔀</button> -->
         <div class="scroll-content">
-            <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Parfum detoiles 🎹')">Parfum detoiles 🎹</button>
-            <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Marginalia #65 🌊')">Marginalia 🌊</button>
-            <button class="menu-btn" onclick="playTrack('mysong3.mp3', 'ziggy')">ziegeler 1</button>
-            <button class="menu-btn" onclick="playTrack('mysong4.mp3', 'werner 2')">werner 2</button>
-            <button class="menu-btn" onclick="playTrack('mysong5.mp3', 'Jeffrey')">Epstein</button>
-            <button class="menu-btn" onclick="playTrack('mysong6.mp3', 'kjesiii')">alooo</button>
-            <button class="menu-btn" onclick="playTrack('mysong7.mp3', 'kizoooo')">kosha mona</button>
+            <button class="menu-btn" onclick="playTrack('mysong1.mp3', 'Parfum detoiles')">Parfum detoiles</button>
+            <button class="menu-btn" onclick="playTrack('mysong2.mp3', 'Marginalia #65')">Marginalia</button>
+            <button class="menu-btn" onclick="playTrack('mysong3.mp3', 'Easy Lovers')">Easy Lovers</button>
+            <button class="menu-btn" onclick="playTrack('mysong4.mp3', 'Wyoming')">Wyoming</button>
             <button class="menu-btn" style="color:rgba(110, 71, 12, 0.5);">More coming soon...</button>
         </div>
     </div>
@@ -431,13 +472,13 @@
 
         const masterQuestionBank = [
             { q: "What data type is used for 'true' or 'false' values?", a: "boolean" },
-            { q: "What does HTML stand for?", a: "hypertext" },
-            { q: "In Python, which keyword defines a function?", a: "def" },
+            { q: "What does HTML stand for?", a: "hypertext markup language" },
+            { q: "Which keyword indicates a method returns nothing in Java?", a: "void" }, 
             { q: "What is 10 modulo 3?", a: "1" },
-            { q: "Is Python compiled or interpreted?", a: "interpreted" },
-            { q: "What does CSS stand for?", a: "cascading" },
-            { q: "What is the time complexity of looking up an item in a hash map?", a: "constant" },
-            { q: "Which symbol is used to comment in Python?", a: "#" },
+            { q: "Which keyword is used to create a new object instance?", a: "new" },    
+            { q: "What does CSS stand for?", a: "cascading style sheets" },
+            { q: "What is the time complexity of looking up an item in a hash map?", a: "O(1)" }, //
+            { q: "What is the name of the entry point method in Java?", a: "main" },      
             { q: "Which SQL command retrieves data?", a: "select" },
             { q: "What is the binary representation of 2?", a: "10" },
             { q: "Arrays in most languages start at which index?", a: "0" },
@@ -632,6 +673,20 @@
             document.getElementById('track-title').innerText = "No Track Selected";
             playBtn.innerText = "▶";
         }
+
+        function playRandom() {
+        const playlist = [
+            { url: 'mysong1.mp3', title: 'Parfum detoiles' },
+            { url: 'mysong2.mp3', title: 'Marginalia' },
+            { url: 'mysong3.mp3', title: 'Easy Lovers' },
+            { url: 'mysong4.mp3', title: 'Wyoming' }
+        ];
+
+        const randomIndex = Math.floor(Math.random() * playlist.length);
+        const selectedSong = playlist[randomIndex];
+
+        playTrack(selectedSong.url, selectedSong.title);
+}
     </script>
 </body>
 
