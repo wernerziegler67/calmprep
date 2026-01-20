@@ -379,7 +379,13 @@
         <h2 style="color:white;">4-7-8 Method</h2>
         <div id="breathing-circle">Ready</div>
         <p id="sub-text" style="color:white; font-weight:500;">Focus on your breath.</p>
+        
         <button class="menu-btn start-btn" id="breath-start-btn" onclick="startBreath()">Start</button>
+        
+        <button class="menu-btn start-btn" id="breath-stop-btn" onclick="resetBreathing()" 
+                style="display:none;">
+            Stop Exercise
+        </button>
     </div>
 
     <div id="messages" class="screen">
@@ -628,10 +634,17 @@
 
         // --- BREATHING & MUSIC ---
         let breathInterval;
+
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
-            const btn = document.getElementById('breath-start-btn');
-            btn.style.display = "none";
+            const startBtn = document.getElementById('breath-start-btn');
+            const stopBtn = document.getElementById('breath-stop-btn');
+            
+            // Swap buttons
+            startBtn.style.display = "none";
+            stopBtn.style.display = "flex"; // Show the stop button
+            
+            // Start Animation
             circle.style.animation = "breathe-478 19s infinite linear";
             updateBreathText();
             breathInterval = setInterval(updateBreathText, 19000);
@@ -644,14 +657,26 @@
             setTimeout(() => { circleText.innerText = "Exhale"; }, 11000);
         }
 
-        function stopBreathing() {
+        // New function: Stops the animation but stays on the screen
+        function resetBreathing() {
             const circle = document.getElementById('breathing-circle');
-            const btn = document.getElementById('breath-start-btn');
+            const startBtn = document.getElementById('breath-start-btn');
+            const stopBtn = document.getElementById('breath-stop-btn');
+
             circle.style.animation = "none";
             circle.innerText = "Ready";
-            btn.style.display = "flex";
+            
+            // Swap buttons back
+            startBtn.style.display = "flex"; // Show start
+            stopBtn.style.display = "none";  // Hide stop
+            
             clearInterval(breathInterval);
-            showScreen('home');
+        }
+
+        // Existing function: Stops animation AND goes back to menu
+        function stopBreathing() {
+            resetBreathing(); // Stop the logic
+            showScreen('home'); // Go back
         }
 
         function playTrack(url, title) {
@@ -675,18 +700,18 @@
         }
 
         function playRandom() {
-        const playlist = [
-            { url: 'mysong1.mp3', title: 'Parfum detoiles' },
-            { url: 'mysong2.mp3', title: 'Marginalia' },
-            { url: 'mysong3.mp3', title: 'Easy Lovers' },
-            { url: 'mysong4.mp3', title: 'Wyoming' }
-        ];
+            const playlist = [
+                { url: 'mysong1.mp3', title: 'Parfum detoiles' },
+                { url: 'mysong2.mp3', title: 'Marginalia' },
+                { url: 'mysong3.mp3', title: 'Easy Lovers' },
+                { url: 'mysong4.mp3', title: 'Wyoming' }
+            ];
 
-        const randomIndex = Math.floor(Math.random() * playlist.length);
-        const selectedSong = playlist[randomIndex];
+            const randomIndex = Math.floor(Math.random() * playlist.length);
+            const selectedSong = playlist[randomIndex];
 
-        playTrack(selectedSong.url, selectedSong.title);
-}
+            playTrack(selectedSong.url, selectedSong.title);
+        }
     </script>
 </body>
 
