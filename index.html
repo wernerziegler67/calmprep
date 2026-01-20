@@ -632,51 +632,66 @@
             });
         }
 
-        // --- BREATHING & MUSIC ---
+        // --- BREATHING LOGIC (FIXED) ---
         let breathInterval;
+        let timeout1; // Tracks the "Hold" timer
+        let timeout2; // Tracks the "Exhale" timer
 
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
             const startBtn = document.getElementById('breath-start-btn');
             const stopBtn = document.getElementById('breath-stop-btn');
             
-            // Swap buttons
             startBtn.style.display = "none";
-            stopBtn.style.display = "flex"; // Show the stop button
+            stopBtn.style.display = "flex";
             
-            // Start Animation
             circle.style.animation = "breathe-478 19s infinite linear";
+            
+            // Run immediately the first time
             updateBreathText();
+            // Then repeat every 19 seconds
             breathInterval = setInterval(updateBreathText, 19000);
         }
 
         function updateBreathText() {
             const circleText = document.getElementById('breathing-circle');
+            
             circleText.innerText = "Inhale";
-            setTimeout(() => { circleText.innerText = "Hold"; }, 4000);
-            setTimeout(() => { circleText.innerText = "Exhale"; }, 11000);
+
+            // Store the timeouts so we can cancel them later
+            timeout1 = setTimeout(() => { 
+                circleText.innerText = "Hold"; 
+            }, 4000);
+
+            timeout2 = setTimeout(() => { 
+                circleText.innerText = "Exhale"; 
+            }, 11000);
         }
 
-        // New function: Stops the animation but stays on the screen
         function resetBreathing() {
             const circle = document.getElementById('breathing-circle');
             const startBtn = document.getElementById('breath-start-btn');
             const stopBtn = document.getElementById('breath-stop-btn');
 
+            // 1. Stop the animation
             circle.style.animation = "none";
             circle.innerText = "Ready";
             
-            // Swap buttons back
-            startBtn.style.display = "flex"; // Show start
-            stopBtn.style.display = "none";  // Hide stop
-            
+            // 2. Clear the main interval
             clearInterval(breathInterval);
+
+            // 3. KILL THE GHOST TIMERS (This prevents the glitch)
+            clearTimeout(timeout1);
+            clearTimeout(timeout2);
+            
+            // 4. UI Reset
+            startBtn.style.display = "flex";
+            stopBtn.style.display = "none";
         }
 
-        // Existing function: Stops animation AND goes back to menu
         function stopBreathing() {
-            resetBreathing(); // Stop the logic
-            showScreen('home'); // Go back
+            resetBreathing();
+            showScreen('home');
         }
 
         function playTrack(url, title) {
