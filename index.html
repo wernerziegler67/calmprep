@@ -275,9 +275,8 @@
             margin-top: 10px;
         }
 
-        /* --- FIXES FOR STABILITY --- */
+        /* --- STABILITY --- */
 
-        /* Fixed Motivation Quote Box */
         .quote-fixed-box {
             height: 220px; 
             width: 90%; 
@@ -290,7 +289,6 @@
             box-sizing: border-box;
         }
 
-        /* Fixed Interview Question Box */
         .interview-fixed-box {
             height: 140px; 
             width: 90%;
@@ -303,7 +301,6 @@
             overflow-y: auto;
         }
 
-        /* Ensure feedback message reserves space so it doesn't jump */
         .feedback-msg {
             height: 30px; 
             margin-top: 10px;
@@ -632,10 +629,10 @@
             });
         }
 
-        // --- BREATHING LOGIC (FIXED) ---
+        // --- BREATHING ---
         let breathInterval;
-        let timeout1; // Tracks the "Hold" timer
-        let timeout2; // Tracks the "Exhale" timer
+        let timeout1; 
+        let timeout2; 
 
         function startBreath() {
             const circle = document.getElementById('breathing-circle');
@@ -647,9 +644,8 @@
             
             circle.style.animation = "breathe-478 19s infinite linear";
             
-            // Run immediately the first time
             updateBreathText();
-            // Then repeat every 19 seconds
+
             breathInterval = setInterval(updateBreathText, 19000);
         }
 
@@ -658,7 +654,6 @@
             
             circleText.innerText = "Inhale";
 
-            // Store the timeouts so we can cancel them later
             timeout1 = setTimeout(() => { 
                 circleText.innerText = "Hold"; 
             }, 4000);
@@ -673,18 +668,14 @@
             const startBtn = document.getElementById('breath-start-btn');
             const stopBtn = document.getElementById('breath-stop-btn');
 
-            // 1. Stop the animation
             circle.style.animation = "none";
             circle.innerText = "Ready";
             
-            // 2. Clear the main interval
             clearInterval(breathInterval);
 
-            // 3. KILL THE GHOST TIMERS (This prevents the glitch)
             clearTimeout(timeout1);
             clearTimeout(timeout2);
             
-            // 4. UI Reset
             startBtn.style.display = "flex";
             stopBtn.style.display = "none";
         }
